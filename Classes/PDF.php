@@ -50,8 +50,12 @@ class PDF
         ]);
 
         $pdf->setHttpContext($context);
-
-        $pdf->loadHtml(View::make('invoices::'.$template, ['invoice' => $invoice]));
+        
+        if(View::exists('invoices.'.$template)) {
+             $pdf->loadHtml(View::make('invoices.'.$template, ['invoice' => $invoice]));
+        } else {
+             $pdf->loadHtml(View::make('invoices::'.$template, ['invoice' => $invoice]));
+        }
         $pdf->render();
 
         return $pdf;
